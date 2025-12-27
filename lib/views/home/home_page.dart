@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'report_page.dart'; //diğer sayfayı buraya tanıttım
 
 // Burası uygulamanın ana sayfası, yani haritanın olduğu yer.
 class HomePage extends StatefulWidget {
@@ -23,7 +24,12 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: const Icon(Icons.exit_to_app, color: Colors.red),
             onPressed: () {
-
+              // Navigator kullanarak kullanıcıyı diğer sayfaya atıyorum
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ReportPage()),
+              );
+              print("Kullanıcıyı güvenli bir şekilde ihbar sayfasına yönlendirdim.");
               print("Çıkış butonuna basıldı, işlem başlatılıyor...");
             },
           ),
@@ -53,7 +59,7 @@ class _HomePageState extends State<HomePage> {
           ),
 
           // 2. KATMAN: Acil İhbar Butonu
-          // Bu butonu sayfanın en altına sabitledim ki acil durumda hemen basılabilsin.
+
           Positioned(
             bottom: 30,
             left: 20,
