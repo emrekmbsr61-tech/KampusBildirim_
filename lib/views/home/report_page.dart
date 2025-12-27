@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-// İhbar sayfamızın ana giriş kısmı burası
+// Kullanıcıların ihbarda bulunabileceği kısım
 class ReportPage extends StatefulWidget {
   const ReportPage({super.key});
 
@@ -9,96 +9,60 @@ class ReportPage extends StatefulWidget {
 }
 
 class _ReportPageState extends State<ReportPage> {
-  // Kullanıcının seçtiği olay türünü bu değişkende tutuyoruz
-  String? selectedType;
-
-  // menüde çıkacak olay listesi
-  final List<String> reportTypes = [
-    'Acil Durum',
-    'Yangın',
-    'Kavga / Şiddet',
-    'Sağlık Sorunu',
-    'Şüpheli Paket',
-    'Diğer'
-  ];
+// Başlık ve detay alanlarına yazılan bilgileri tutabilmel için controller oluşturdum.
+  final TextEditingController _baslikController = TextEditingController();
+  final TextEditingController _detayController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Üst taraftaki başlık çubuğu
       appBar: AppBar(
-        title: const Text("İhbar Bildir"),
-        backgroundColor: Colors.redAccent, // Güvenlik uygulaması diye kırmızıyı seçtik
-        foregroundColor: Colors.white, // Yazılar beyaz olsun
+        title: const Text("Acil İhbar Bildir"),
+        backgroundColor: Colors.redAccent, // Acil olduğu için kırmızı seçtim
       ),
       body: Padding(
-        padding: const EdgeInsets.all(20.0), // Kenarlardan biraz boşluk bıraktık yan yana olmasın
+        padding: const EdgeInsets.all(16.0),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Kullanıcıyı bilgi veren yazı
-            const Text(
-              "Lütfen olayla ilgili bilgileri aşağıya giriniz:",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 20), // Araya boşluk koyduk
-
-            // 1.kısım Olay türü seçme yeri(Açılan menü)
-            DropdownButtonFormField<String>(
+            // Olayın ne olduğunu kısa ve öz almak için bu alanı yaptım.
+            TextField(
+              controller: _baslikController,
               decoration: const InputDecoration(
-                labelText: "Olay Türü", // Kutunun üzerindeki başlık olan yer
-                border: OutlineInputBorder(), // Kutunun etrafını çizdiğimiz kısım
-                prefixIcon: Icon(Icons.warning_amber_rounded), // Sol tarafa uyarı ikonu koyduk
-              ),
-              value: selectedType,
-              // Listeyi buraya döngüyle aktardık
-              items: reportTypes.map((String type) {
-                return DropdownMenuItem<String>(
-                  value: type,
-                  child: Text(type),
-                );
-              }).toList(),
-              // Seçim yapılınca değişkeni güncelliyoruz
-              onChanged: (String? newValue) {
-                setState(() {
-                  selectedType = newValue;
-                });
-              },
-            ),
-            const SizedBox(height: 20),
-
-            // 2.yer Açıklama Yazma kutusu
-            const TextField(
-              maxLines: 4, // Kutu boyutunu büyüttük
-              decoration: InputDecoration(
-                labelText: "Olayın Açıklaması",
-                hintText: "Örn: Kütüphane önünde kavga var...",
+                labelText: "Olay Başlığı (Örn: Yangın, Kaza)",
                 border: OutlineInputBorder(),
-                alignLabelWithHint: true, // Yazının yukarıdan başlaması için
               ),
             ),
-            const SizedBox(height: 30),
+            const SizedBox(height: 16),
 
-            // 3. kısım Gönder Butonu
-            ElevatedButton.icon(
-              onPressed: () {
-                print("İhbar Gönderildi: $selectedType");
-                
-                // Kullanıcıya alttan bildirim gösteriyoruz
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text("İhbarınız sisteme düştü!")),
-                );
-                
-                // İşlem bitince bu sayfayı kapatıp haritaya dönüyoruz
-                Navigator.pop(context);
-              },
-              icon: const Icon(Icons.send), // Gönder ikonu
-              label: const Text("İHBARI GÖNDER"),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red[700], // Koyu kırmızı yaptık
-                foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(vertical: 15), // Butonu biraz büyüttük
-                textStyle: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            // Olayın detaylarını yazılması için bir kutu tasarladım
+            TextField(
+              controller: _detayController,
+              maxLines: 4,
+              decoration: const InputDecoration(
+                labelText: "Olayın Detayı ve Konumu",
+                border: OutlineInputBorder(),
+              ),
+            ),
+            const SizedBox(height: 24),
+
+            // İhbarı gönderirken boş gönderilmesin diye engelleyen kısım
+            SizedBox(
+              width: double.infinity,
+              height: 50,
+              child: ElevatedButton(
+                onPressed: () {
+                  if (_baslikController.text.isEmpty) {
+                    // Eğer başlık boşsa kullanıcıyı dolfur diye uyarıyorum
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Lütfen olay başlığını yazın!")),
+                    );
+                  } else {
+                    // Gerekli alanlar doldurulduğunda ihbarın gönderilmeye hazır olduğu bildiriyorum
+                    print("İhbar gönderilmeye hazır: ${_baslikController.text}");
+                  }
+                },
+                style: ElevatedButton.styleFrom(backgroundColor: Colors.redAccent),
+                child: const Text("İHBARI GÖNDER", style: TextStyle(color: Colors.white)),
               ),
             ),
           ],
