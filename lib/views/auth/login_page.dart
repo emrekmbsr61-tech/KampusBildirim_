@@ -11,7 +11,7 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   // Kullanıcının e-posta ve şifre kutusuna yazdığı yazıları yakalamak için
-  // bu "Controller"ları (kumandaları) tanımladım.
+  // bu "Controller"ları (kumandaları) tanımladım.git add .
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
