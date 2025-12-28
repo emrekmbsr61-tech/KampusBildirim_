@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'report_page.dart';// Eğer dosya yolun farklıysa burayı düzelt
+import 'report_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,7 +9,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  // 20 PUANLIK KISIM: Verileri elle tek tek yazmak yerine bir listede tutuyoruz.
+
   // Gerçek uygulamada bu veriler veritabanından (Backend) gelir.
   final List<Map<String, dynamic>> bildirimler = [
     {
@@ -45,9 +45,9 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[100], // Hafif gri arka plan
+      backgroundColor: Colors.grey[100],
 
-      // --- ÜST BAŞLIK (APP BAR) ---
+      // --- ÜST BAŞLIK  ---
       appBar: AppBar(
         title: const Text("Kampüs Haritası ve Bildirimler"),
         backgroundColor: Colors.white,
@@ -72,7 +72,7 @@ class _HomePageState extends State<HomePage> {
           // 1. KATMAN: Bildirim Listesi
           // ListView.builder kullanarak listeyi otomatik oluşturuyoruz.
           ListView.builder(
-            padding: const EdgeInsets.fromLTRB(16, 16, 16, 100), // Alttaki butona yer bırak
+            padding: const EdgeInsets.fromLTRB(16, 16, 16, 100),
             itemCount: bildirimler.length,
             itemBuilder: (context, index) {
               // Her bir bildirim için kart tasarımı fonksiyonunu çağırıyoruz
@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
             child: ElevatedButton.icon(
               onPressed: () {
                 // İhbar sayfasına git
-                // Eğer ReportPage dosyan yoksa veya adı farklıysa burayı yorum satırı yap.
+
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const ReportPage()),
