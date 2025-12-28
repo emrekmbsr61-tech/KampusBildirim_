@@ -186,9 +186,9 @@ class _ReportPageState extends State<ReportPage> {
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
                   child: Text(
-                    "📍 $_konumBilgisi",
+                    " $_konumBilgisi",
                     style: const TextStyle(fontSize: 12, color: Colors.grey),
-                    textAlign: Center,
+                    textAlign: TextAlign.center,
                   ),
                 ),
 
