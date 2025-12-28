@@ -1,3 +1,4 @@
+import '../home/home_page.dart';
 import 'package:flutter/material.dart';
 
 // Burası projemizin girişi
@@ -90,8 +91,11 @@ class _LoginPageState extends State<LoginPage> {
                 height: 50, // yüksekliği artırdım
                 child: ElevatedButton(
                   onPressed: () {
-                    // konsola not düşüyorum.
-                    print("Giriş yapiliyor");
+                  // Giriş yapınca Sincap'ın ana sayfasına uçuyoruz
+                  Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const HomePage()),
+                  );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.redAccent, // Ana rengimiz kırmızı
