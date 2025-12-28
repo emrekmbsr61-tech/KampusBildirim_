@@ -13,7 +13,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // Üst taraftaki Başlık Çubuğunu (AppBar) buraya tasarladım
+      // Üst taraftaki Başlık Çubuğunu  buraya tasarladım
       appBar: AppBar(
         title: const Text("Kampüs Haritası"),
         backgroundColor: Colors.white,
@@ -41,20 +41,48 @@ class _HomePageState extends State<HomePage> {
         children: [
           // 1. KATMAN: Harita Alanı
 
+
           Container(
-            color: Colors.grey[300],
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(Icons.map, size: 100, color: Colors.grey[600]),
-                  const SizedBox(height: 10),
-                  const Text(
-                    "Harita Yükleniyor...",
-                    style: TextStyle(fontSize: 18, color: Colors.black54),
+            color: Colors.grey[100],
+            child: ListView(
+              padding: const EdgeInsets.fromLTRB(16, 16, 16, 100), // Butonun altında kalmasın diye boşluk
+              children: [
+                // KART 1: ACİL DURUM
+                Card(
+                  elevation: 4,
+                  color: Colors.red.shade50,
+                  child: ListTile(
+                    leading: const Icon(Icons.local_fire_department, color: Colors.red, size: 40),
+                    title: const Text("YANGIN ALARMI", style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red)),
+                    subtitle: const Text("Konum: Merkez Kütüphane\nDurum: Ekipler Yönlendirildi (10:42)"),
+                    isThreeLine: true,
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(height: 12),
+
+                // KART 2: GÜVENLİK
+                const Card(
+                  elevation: 2,
+                  child: ListTile(
+                    leading: Icon(Icons.security, color: Colors.blue, size: 40),
+                    title: Text("Şüpheli Paket İhbarı", style: TextStyle(fontWeight: FontWeight.bold)),
+                    subtitle: Text("Konum: A Kapısı Girişi\nDurum: Güvenlik İnceliyor (09:15)"),
+                    isThreeLine: true,
+                  ),
+                ),
+                const SizedBox(height: 12),
+
+                // KART 3: TRAFİK
+                const Card(
+                  elevation: 2,
+                  child: ListTile(
+                    leading: Icon(Icons.car_crash, color: Colors.orange, size: 40),
+                    title: Text("Hatalı Park / Yol Kapalı", style: TextStyle(fontWeight: FontWeight.bold)),
+                    subtitle: Text("Konum: Otopark B Blok\nDurum: Çekici Bekleniyor (08:30)"),
+                    isThreeLine: true,
+                  ),
+                ),
+              ],
             ),
           ),
 
