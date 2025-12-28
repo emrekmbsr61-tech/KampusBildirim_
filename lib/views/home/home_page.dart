@@ -81,6 +81,7 @@ class _HomePageState extends State<HomePage> {
                     subtitle: Text("Konum: Otopark B Blok\nDurum: Çekici Bekleniyor (08:30)"),
                     isThreeLine: true,
                   ),
+                  
                 ),
               ],
             ),

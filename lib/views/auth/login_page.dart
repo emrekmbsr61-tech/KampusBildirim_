@@ -1,5 +1,7 @@
 import '../home/home_page.dart';
 import 'package:flutter/material.dart';
+import '../../data/user_data.dart'; // kullanıcıları getır
+
 
 // Burası projemizin girişi
 // Ekranın durumu değişeceği için (yazı yazma vs.) StatefulWidget kullandım.
@@ -91,22 +93,58 @@ class _LoginPageState extends State<LoginPage> {
                 height: 50, // yüksekliği artırdım
                 child: ElevatedButton(
                   onPressed: () {
-                  // Giriş yapınca Sincap'ın ana sayfasına uçuyoruz
-                  Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomePage()),
-                  );
+                  String girilenEmail = _emailController.text.trim(); // trim() boşlukları temizler
+                  String girilenSifre = _passwordController.text.trim();
+                  // 2. Kutular boşsa uyarı verelim
+                    if (girilenEmail.isEmpty || girilenSifre.isEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Lütfen e-posta ve şifreyi giriniz.")),
+                      );
+                      return; // İşlemi burada durdur
+                    }
+
+                    // 3. Kontrol Mantığı (Bayrak Yöntemi)
+                    bool girisBasarili = false;
+
+                    // user_data.dart dosyasındaki 'users' listesini kontrol ediyoruz.
+                    // DİKKAT: Eğer senin listendeki değişken adı 'users' değilse burası kırmızı yanar.
+                    // O zaman 'users' yazısını senin liste adınla değiştirmelisin.
+                    for (var user in kayitliKullanicilar ) {
+                      if (user['email'] == girilenEmail && user['password'] == girilenSifre) {
+                        girisBasarili = true;
+                        break; // Bulduk, döngüden çık
+                      }
+                    }
+
+                    // 4. Sonuca göre hareket edelim
+                    if (girisBasarili) {
+                      // Şifre Doğru -> Ana Sayfaya Git
+                      Navigator.pushReplacement( // Geri tuşuyla login'e dönmesin diye pushReplacement
+                        context,
+                        MaterialPageRoute(builder: (context) => const HomePage()),
+                      );
+                    } else {
+                      // Şifre Yanlış -> Hata Mesajı Göster
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: const Text("Hatalı E-posta veya Şifre!"),
+                          backgroundColor: Colors.redAccent,
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                        ),
+                      );
+                    }
                   },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.redAccent, // Ana rengimiz kırmızı
-                    foregroundColor: Colors.white, // Yazı beyaz
+                    style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent,
+                    foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12), // Butonun köşeleri de uyumlu olsun
+                      borderRadius: BorderRadius.circular(12),
                     ),
                   ),
                   child: const Text(
-                    "GİRİŞ YAP", 
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)
+                    "GİRİŞ YAP",
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
               ),
