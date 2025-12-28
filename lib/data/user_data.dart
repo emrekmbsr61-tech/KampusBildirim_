@@ -1,6 +1,6 @@
 // Burası uygulamada kullanacağımız örnek kullanıcı veritabanı
 
-final Map<String, String> kayitliKullanicilar = [
+final List<Map<String, String>> kayitliKullanicilar = [
   {
     "email": "ahmet@uni.edu.tr",
     "password": "123",
