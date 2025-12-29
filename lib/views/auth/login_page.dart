@@ -149,7 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              // --- EKLENEN LİNKLER BURADA (HATASIZ HALİ) ---
+              // GİRİŞ İŞLEMLERİNİ GÜNCELLEDİK
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
