@@ -1,7 +1,8 @@
 import '../home/home_page.dart';
 import 'package:flutter/material.dart';
 import '../../data/user_data.dart'; // kullanıcıları getır
-
+import 'register_page.dart'; // Kayıt Ol Sayfası
+import 'forgot_pasword_page.dart'; // Şifre Sıfırlama Sayfası
 
 // Burası projemizin girişi
 // Ekranın durumu değişeceği için (yazı yazma vs.) StatefulWidget kullandım.
@@ -147,6 +148,33 @@ class _LoginPageState extends State<LoginPage> {
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                 ),
+              ),
+              // --- EKLENEN LİNKLER BURADA (HATASIZ HALİ) ---
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Şifremi Unuttum
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => ForgotPasswordPage()),
+                      );
+                    },
+                    child: const Text("Şifremi Unuttum", style: TextStyle(color: Colors.grey)),
+                  ),
+
+                  // Kayıt Ol
+                  TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const RegisterPage()),
+                      );
+                    },
+                    child: const Text("Kayıt Ol", style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold)),
+                  ),
+                ],
               ),
             ],
           ),
